@@ -45,7 +45,7 @@ This repository provides data for the Devkit and includes basic code examples fo
 ### PINOUT
 <details>
 <summary> PINOUT </summary>
-
+![Devkit T TFT v1 2 Pinout data White BG](https://github.com/TanderStudio/ESP32-Devkit-TFT/assets/157987904/93045a05-a145-4c4c-bcf2-12c5b4ba0b2e)
 </details>
 
 
