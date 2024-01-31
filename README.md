@@ -1,1 +1,2 @@
-# ESP32-Devkit-T-ST7789V3
+# ESP32-Devkit-TFT
+## About
