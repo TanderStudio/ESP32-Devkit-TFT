@@ -22,7 +22,7 @@ This repository provides the basic data for the Devkit and includes basic code s
 
 ## Datasheet
 <details>
-  <summary> Description</summary>
+  <summary> Features, Board Size, Board Select, TFT</summary>
   
    ### Description
 Features: 
