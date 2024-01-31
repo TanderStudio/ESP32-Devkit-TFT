@@ -1,4 +1,7 @@
 # ESP32-Devkit-TFT
+
+![Devkit T TFT v1 2 Pinout data White BG resize](https://github.com/TanderStudio/ESP32-Devkit-TFT/assets/157987904/b7c1764c-308f-49d5-8b1e-15cc54aedc22)
+
 ## About
 Development board for ESP32 and LCD TFT Display. This kit offers a range of LCD TFT Display options, including ST7789, ST7789V, ST7789V3, GC9A01, and more, providing developers with flexibility to choose the display that best suits their project needs. Alongside this display versatility, the kit features four input pulldown buttons for user interactions and an additional input for voltage readings.
 
@@ -7,11 +10,11 @@ This repository provides data for the Devkit and includes basic code examples fo
 ***For more detail please refer to ESP32 and LCD TFT Display datasheet***
 
 ## Datasheet
-### Description
 <details>
-  <summary> Description </summary>
-    
-  Features: 
+  <summary> Description</summary>
+  
+   ### Description
+Features: 
   +	ESP32-WROOM-32X
   +	USB Protection Diode
   + USB Type-C
@@ -38,17 +41,38 @@ This repository provides data for the Devkit and includes basic code examples fo
   
   ### SCHEMATIC
   ![image_2024-01-31_170944306](https://github.com/TanderStudio/ESP32-Devkit-TFT/assets/157987904/b922a3a0-2e35-49ee-9fa5-110b4d7dcd37)
-
-  
-  </details>
+</details>
 
 ### PINOUT
 <details>
 <summary> PINOUT </summary>
-![Devkit T TFT v1 2 Pinout data White BG](https://github.com/TanderStudio/ESP32-Devkit-TFT/assets/157987904/93045a05-a145-4c4c-bcf2-12c5b4ba0b2e)
+
+#### TFT 
+Each display have the same pin
+| LCD TFT DISPLAY | GPIO |
+| ----------- | -- |
+| `MOSI`      | 23 |
+| `SCK`       | 28 |
+| `CS`        | 16 |
+| `DC`        | 5  |
+| `RST`       | 17 |
+| `BackLight` | 4  |
+
+#### Button
+| BUTTON | GPIO |
+| ----------- | -- |
+| `INPUT 1`   | 23 |
+| `INPUT 2`   | 28 |
+| `INPUT 3`   | 16 |
+| `INPUT 4`   | 5  |
+
+#### Other
+| Name | GPIO |
+| -----------     | -- |
+| `Voltage Read`  | 34 |
+| `LED`           | 28 |
+
 </details>
 
 
-## GC9A01
-## ST7789V3
-## ST7789V
+
