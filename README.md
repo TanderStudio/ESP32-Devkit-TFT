@@ -41,6 +41,11 @@ Features:
   
   ### SCHEMATIC
   ![image_2024-01-31_170944306](https://github.com/TanderStudio/ESP32-Devkit-TFT/assets/157987904/b922a3a0-2e35-49ee-9fa5-110b4d7dcd37)
+
+  ### BOARD DIMENSION
+
+  ![Screenshot 2024-01-31 190518](https://github.com/TanderStudio/ESP32-Devkit-TFT/assets/157987904/d486ddf6-295e-46d6-9c67-f18a85f52e3e)
+  
 </details>
 
 ### PINOUT
