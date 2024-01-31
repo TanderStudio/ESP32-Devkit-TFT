@@ -4,6 +4,7 @@ Development board for ESP32 and LCD TFT Display. This kit offers a range of LCD 
 
 This repository provides data for the Devkit and includes basic code examples for each display.
 
+***For more detail please refer to ESP32 and LCD TFT Display datasheet***
 
 ## Datasheet
 ### Description
@@ -36,7 +37,8 @@ This repository provides data for the Devkit and includes basic code examples fo
   +	GC9A01 (240x240 px)
   
   ### SCHEMATIC
-  
+  ![image_2024-01-31_170944306](https://github.com/TanderStudio/ESP32-Devkit-TFT/assets/157987904/b922a3a0-2e35-49ee-9fa5-110b4d7dcd37)
+
   
   </details>
 
