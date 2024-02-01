@@ -3,7 +3,7 @@
 ![Devkit T TFT v1 2 Pinout data White BG resize](https://github.com/TanderStudio/ESP32-Devkit-TFT/assets/157987904/b7c1764c-308f-49d5-8b1e-15cc54aedc22)
 
 ## About
-Development board for ESP32 and LCD TFT Display. This kit offers a range of LCD TFT Display options, including ST7789, ST7789V, ST7789V3, GC9A01, and more, providing developers with flexibility to choose the display and all pin that best suits their project needs. Alongside this display versatility, the kit features four input pulldown buttons for user interactions and an additional input for voltage readings.
+Development board for ESP32 and LCD TFT Display. This kit offers a range of LCD TFT Display options, including ST7789, ST7789V, ST7789V3, GC9A01, and more, providing developers with flexibility to choose the display and all pin that best suits their project needs. Alongside this display versatility, the kit features four input pulldown buttons for user interactions and an additional input for voltage readings. This board utilizes the `ESP32 module` from [ESPRESSIF](https://www.espressif.com).
 
 This repository provides the basic data for the Devkit and includes basic code setup and examples for each display.
 
@@ -15,6 +15,7 @@ This repository provides the basic data for the Devkit and includes basic code s
 + [ESP32-DevkitC V4](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/esp32/get-started-devkitc.html)
 + [ESP32-Series Datasheet](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf) PDF
 + [GC9A01 Datasheet](https://www.buydisplay.com/download/ic/GC9A01A.pdf) PDF
++ [Espressif product](https://products.espressif.com/#/product-selector?names=)
 
 </details>
 
@@ -26,7 +27,7 @@ This repository provides the basic data for the Devkit and includes basic code s
   
    ### Description
 Features: 
-  +	ESP32-WROOM-32X
+  +	ESP32-WROOM-32X Module
   +	USB Protection Diode
   + USB Type-C
   + Max +6V Input 
@@ -94,19 +95,47 @@ Each display have the same pin
 <details>
   <summary> Details </summary>
 
-To start, this Devkit board utilizes the same ESP32 as other Devkits. Specifically, it employs either the `ESP32-WROOM-32D` or `ESP32-WROOM-32U` module, which can be identified on the module itself. Additionally, this board is compatible with other libraries, as long as they do not interfere with pins already in use on the Devkit.
+To start, this Devkit board utilizes the same ESP32 as other Devkits. Specifically, it employs either the `ESP32-WROOM-32D` or `ESP32-WROOM-32U` module drom `ESPRESSIF`, which can be identified on the module itself. Additionally, this board is compatible with other libraries, as long as they do not interfere with pins already in use on the Devkit.
 
-If you are using `platform.io`, select the `uPesy ESP32 Wroom DevKit` as the target `board`.
+If you are using `platform.io`, select the `uPesy ESP32 Wroom DevKit` or `Denky` as the target `board`.
   
 ## Devkit
 <details>
 <summary>V Read, LED, Button</summary>
   
   ### Voltage Read
+  <details>
   This code snippet is for reading the voltage on an ESP32, offering a straightforward method for monitoring battery levels. It's crucial to acknowledge that the accuracy of voltage readings may differ among individual ESP32 devices, and the ADC readings of the ESP32 `may not` exhibit a linear pattern. The voltage input read system employs a basic voltage divider using `two` `220k` ohm resistors, as indicated in the schematic. The code is setup to operate with this specific voltage divider setup.
 
+You can use the code provided below
+  ```
+#include <Arduino.h>
 
-  put the code on the `void loop` and the `GPIO` pin is `34`
+#define v_inp 34 //define the voltage inout pin
+
+void setup() {
+
+    Serial.begin(9600);
+
+    pinMode(v_inp, OUTOUT); //define the pinMode
+    
+    Serial.println("Hello World");
+}
+
+void loop() {
+
+    float VoltageRead = analogRead(v_inp);
+        for (int i = 0; i < 16; i++) {
+            VoltageRead = VoltageRead + analogRead(v_inp); // ADC
+        }
+
+    float Voltage = 2 * VoltageRead / 16 / 4095.0 * 3.3; // ADC correction, ADC range: 0-4095, Vref: 3.3V
+    Serial.println(Voltage,3);
+
+}
+```
+#### Snippet
+You can also just copy this code and put it on the `void loop`.
   ```
 float VoltageRead = analogRead(34);
   for (int i = 0; i < 16; i++) {
@@ -115,12 +144,104 @@ float VoltageRead = analogRead(34);
   float Voltage = 2 * VoltageRead / 16 / 4095.0 * 3.3; // ADC correction, ADC range: 0-4095, Vref: 3.3V
   Serial.println(Voltage,3);
 ```
+</details>
+
   ### Built in LED
-  This code snippet is for controlling the LED on the Devkit, which is connected to GPIO 2. You can use this LED in the same way as any standard LED.
+  
+  <details>
+  This code snippet is for controlling the LED on the Devkit, which is connected to `GPIO 2`. You can use this LED in the same way as any standard LED.
+
+#### Simple LED PWM
+  ```
+#include <Arduino.h>
+
+//define the pin for the LED
+#define BuiltInLED 2
+
+
+int brightness = 0; // how bright the LED is
+int fadeAmount = 5; // how many points to fade the LED by
+
+void setup() {
+
+    Serial.begin(9600);
+
+    pinMode(BuiltInLED, OUTPUT); // Set the LED pin as an output
+
+    Serial.println("Hello World");
+}
+
+void loop() {
+
+    brightness = brightness + fadeAmount; // Change the brightness
+        if (brightness <= 0 || brightness >= 255) {
+            fadeAmount = -fadeAmount; // Reverse the fade direction
+        }
+    
+    analogWrite(BuiltInLED, brightness); // Set the brightness
+    delay(20); // Delay for smoother fading (adjust as needed)
+
+}
+```
+</details>
 
   ### Button
+
+<details>
   
+  The following code snippet is designed to read button inputs from the Devkit. Each button is pulled down using a 10K Ohm resistor. The list of `GPIOs` used can be seen below.
   
+| BUTTON | GPIO |
+| ----------- | -- |
+| `INPUT 1`   | 35 |
+| `INPUT 2`   | 32 |
+| `INPUT 3`   | 33 |
+| `INPUT 4`   | 25 |
+
+
+Here are the example of how to read the button input
+  ```
+#include <Arduino.h>
+
+#define input_1 35
+#define input_2 32
+#define input_3 33
+#define input_4 25
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  Serial.println("Hello World");
+
+  pinMode(input_1, INPUT);
+  pinMode(input_2, INPUT);
+  pinMode(input_3, INPUT);
+  pinMode(input_4, INPUT);
+  
+  Serial.println("ESP Start");
+  Serial.println("--------------------------------------------------");
+
+}
+
+void loop() {
+
+ if (digitalRead(input_1) == HIGH){
+      Serial.println("input_1");
+    }
+    if (digitalRead(input_2) == HIGH){
+      Serial.println("input_2");
+    }
+    if (digitalRead(input_3) == HIGH){
+      Serial.println("input_3");
+    }
+    if (digitalRead(input_4) == HIGH){
+      Serial.println("input_4");
+      }
+      delay(100);
+
+}
+```
+</details>
 </details>
 
 ## TFT
@@ -128,7 +249,7 @@ float VoltageRead = analogRead(34);
   
 To begin, you can choose any display library compatible with the ESP32 Devkit and TFT display. I recommend using either [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI?tab=readme-ov-file) by Bodmer or [LovyanGFX](https://github.com/lovyan03/LovyanGFX) by lovyan03.
 
-The `pin` configuration for the display that is compatible with this board remains the same across various displays.
+The `pin` configuration for the display for this board remains the same across various displays.
 
 to controll the `Backlight` i recommend to do it separately from the library
 
@@ -140,6 +261,11 @@ to controll the `Backlight` i recommend to do it separately from the library
 | `DC`        | 5  |
 | `RST`       | 17 |
 | `BackLight` | 4  |
+
+Using the TFT library you need to set up the pin first either in the user setup or on the main code
+
+
+
 </details>
   
 </details>
