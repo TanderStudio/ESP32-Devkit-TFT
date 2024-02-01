@@ -97,7 +97,7 @@ Each display have the same pin
 
 To start, this Devkit board utilizes the same ESP32 as other Devkits. Specifically, it employs either the `ESP32-WROOM-32D` or `ESP32-WROOM-32U` module drom `ESPRESSIF`, which can be identified on the module itself. Additionally, this board is compatible with other libraries, as long as they do not interfere with pins already in use on the Devkit.
 
-If you are using `platform.io`, select the `uPesy ESP32 Wroom DevKit` or `Denky` as the target `board`.
+If you are using `platform.io`, select the `uPesy ESP32 Wroom DevKit` or `Denky32 (WROOM32)` as the target `board`.
   
 ## Devkit
 <details>
@@ -181,6 +181,42 @@ void loop() {
     analogWrite(BuiltInLED, brightness); // Set the brightness
     delay(20); // Delay for smoother fading (adjust as needed)
 
+}
+```
+
+#### Advanced LED PWM
+You can also use this type of [Advanced PWM]([https://randomnerdtutorials.com/esp32-pwm-arduino-ide/](https://randomnerdtutorials.com/esp32-pwm-arduino-ide/)) to control the LED
+```
+// the number of the LED pin
+const int ledPin = 2;  // 2 corresponds to GPIO2
+
+// setting PWM properties
+const int freq = 5000;
+const int ledChannel = 0;
+const int resolution = 8;
+ 
+void setup(){
+  // configure LED PWM functionalitites
+  ledcSetup(ledChannel, freq, resolution);
+  
+  // attach the channel to the GPIO to be controlled
+  ledcAttachPin(ledPin, ledChannel);
+}
+ 
+void loop(){
+  // increase the LED brightness
+  for(int dutyCycle = 0; dutyCycle <= 255; dutyCycle++){   
+    // changing the LED brightness with PWM
+    ledcWrite(ledChannel, dutyCycle);
+    delay(15);
+  }
+
+  // decrease the LED brightness
+  for(int dutyCycle = 255; dutyCycle >= 0; dutyCycle--){
+    // changing the LED brightness with PWM
+    ledcWrite(ledChannel, dutyCycle);   
+    delay(15);
+  }
 }
 ```
 </details>
